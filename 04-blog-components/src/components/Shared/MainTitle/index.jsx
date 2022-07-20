@@ -1,5 +1,5 @@
 import "./MainTitle.css";
-import Button from "./Button";
+import Button from "../Button";
 export default function MainTitle({ type, title, btnText, btnClass, href }) {
   switch (type) {
     case "1":
