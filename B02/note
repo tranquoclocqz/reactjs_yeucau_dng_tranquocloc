@@ -1,0 +1,18 @@
+pages
+    HomePage.js
+components
+    Header
+        index.js
+        header.css
+    Footer
+        index.js
+        header.js
+    ArticleLatest
+    ArticlePopular
+    ArticleList
+
+    ArticleItem
+    shared
+        Button
+        Input
+        MainTitle
