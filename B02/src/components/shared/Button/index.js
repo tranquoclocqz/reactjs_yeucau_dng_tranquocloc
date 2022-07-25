@@ -8,7 +8,6 @@ function Button(props) {
     htmlType,
     className,
     size,
-    onClick,
     loading,
     children,
     as = "button",
@@ -23,7 +22,6 @@ function Button(props) {
   };
   return (
     <Tag
-      onClick={onClick}
       type={htmlType ?? "button"}
       className={classnames("btn", className, btnClass)}
       {...attributes}
