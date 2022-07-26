@@ -39,7 +39,11 @@ function ArticleGeneral() {
           })}
         </div>
         {/* End Row News List */}
-        <Button />
+        <div className="text-center">
+          <Button type="primary" size="large" loading="true">
+            Load more
+          </Button>
+        </div>
       </div>
     </div>
   );

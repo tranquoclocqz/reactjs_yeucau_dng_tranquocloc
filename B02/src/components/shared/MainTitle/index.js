@@ -9,7 +9,7 @@ function MainTitle({ title, btnAttribute }) {
       })}
     >
       <h2>{title}</h2>
-      <Button {...btnAttribute}/>
+      {btnAttribute && <Button {...btnAttribute}/>}
     </div>
   );
 }
