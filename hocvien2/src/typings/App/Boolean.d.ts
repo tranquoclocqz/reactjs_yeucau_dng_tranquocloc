@@ -1,0 +1,1 @@
+export type TypeBoolean = 1 | 0
