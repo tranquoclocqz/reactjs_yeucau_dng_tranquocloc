@@ -1,40 +1,20 @@
-let listData = [{
-        id: createUUID(),
-        description: "Chi tieu ngay 26/07",
-        amount: -100000
-    },
-    {
-        id: createUUID(),
-        description: "Thu nhap thang 06",
-        amount: 3000000
-    },
-    {
-        id: createUUID(),
-        description: "Thu nhap thang 07",
-        amount: 2000000
-    },
-    {
-        id: createUUID(),
-        description: "Chi tieu ngay 27/07",
-        amount: -150000
-    },
-];
+let listData = JSON.parse(localStorage.getItem("items")) || [];
 let listIncome = [];
 let listExpenses = [];
 let totalIncome = 0;
 let totalExpenses = 0;
 let totalMonth = 0;
 let percentExpenses = "";
-const  elementTotalMonth = document.querySelector(".budget__value");
-const  elementExpenses = document.querySelector(".budget__expenses--value");
-const  elementIncome = document.querySelector(".budget__income--value");
-const  elementPercentExpenses = document.querySelector(".budget__expenses--percentage");
-const  elementListIncome = document.getElementById("list-incomes");
-const  elementListExpenses = document.getElementById("list-expenses");
-const  cboSelect = document.querySelector(".add__type");
-const  txtDescription = document.querySelector(".add__description");
-const  txtAmount = document.querySelector(".add__value");
-const  button = document.querySelector(".add__btn");
+const elementTotalMonth = document.querySelector(".budget__value");
+const elementExpenses = document.querySelector(".budget__expenses--value");
+const elementIncome = document.querySelector(".budget__income--value");
+const elementPercentExpenses = document.querySelector(".budget__expenses--percentage");
+const elementListIncome = document.getElementById("list-incomes");
+const elementListExpenses = document.getElementById("list-expenses");
+const cboSelect = document.querySelector(".add__type");
+const txtDescription = document.querySelector(".add__description");
+const txtAmount = document.querySelector(".add__value");
+const button = document.querySelector(".add__btn");
 
 function changeClass(e) {
     let value = e.target.value;
@@ -74,25 +54,29 @@ function createUUID() {
 }
 
 function deleteItem(id) {
-    listData = listData.filter(function (e) {
+    localStorage.setItem("items", JSON.stringify(listData.filter(function (e) {
         return e.id !== id;
-    });
+    })));
+    listData = JSON.parse(localStorage.getItem("items"));
     render();
 }
 
 function addItem() {
     let n = cboSelect.value == "exp" ? -1 : 1;
     let num = parseInt(txtAmount.value) * n;
-    listData = [...listData, {
-        id: createUUID(),
-        description: txtDescription.value,
-        amount: num
-    }];
+    localStorage.setItem("items", JSON.stringify([
+        ...listData, {
+            id: createUUID(),
+            description: txtDescription.value,
+            amount: num
+        }
+    ]));
+    listData = JSON.parse(localStorage.getItem("items"));
     resetForm();
     render();
 }
 
-function resetForm(){
+function resetForm() {
     txtAmount.value = 0;
     txtDescription.value = '';
 }
