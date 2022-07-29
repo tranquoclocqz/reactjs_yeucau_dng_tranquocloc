@@ -19,38 +19,42 @@ var listData = [{
         amount: -150000
     },
 ];
-var listIncome = [];
-var listExpenses = [];
+var listIncome = listData.filter(function (e) {
+    return e.amount > 0;
+});
+var listExpenses = listData.filter(function (e) {
+    return e.amount < 0;
+});
 var totalIncome = 0;
 var totalExpenses = 0;
 var totalMonth = 0;
 var percentExpenses = "";
 var elementTotalMonth = document.querySelector(".budget__value");
 var elementExpenses = document.querySelector(".budget__expenses--value");
-var elementIncome = document.querySelector(".budget__income--value");
-var elementPercentExpenses = document.querySelector(".budget__expenses--percentage");
+var elementPercentExpenses = document.getElementById(".budget__expenses--percentage");
 var elementListIncome = document.getElementById("list-incomes");
 var elementListExpenses = document.getElementById("list-expenses");
 var cboSelect = document.querySelector(".add__type");
 var txtDescription = document.querySelector(".add__description");
 var txtAmount = document.querySelector(".add__value");
 var button = document.querySelector(".add__btn");
+if (button) {
+    button.addEventListener("click", addItem);
+}
+if (cboSelect) {
+    cboSelect.addEventListener("change", changeClass);
+}
 
 function changeClass(e) {
     var value = e.target.value;
-    var className = ["red-focus", "red"];
+    var className = "green";
     if (value == "exp") {
-        cboSelect.classList.add(...className);
-        txtDescription.classList.add(...className);
-        txtAmount.classList.add(...className);
-        button.classList.add(...className);
-    } else {
-        cboSelect.classList.remove(...className);
-        txtDescription.classList.remove(...className);
-        txtAmount.classList.remove(...className);
-        button.classList.remove(...className);
+        className = "red";
     }
-
+    cboSelect.classList.toggle(className);
+    txtDescription.classList.toggle(className);
+    txtAmount.classList.toggle(className);
+    button.classList.toggle(className);
 }
 
 function calcPercent(currentValue, totalValue) {
@@ -83,18 +87,12 @@ function deleteItem(id) {
 function addItem() {
     var n = cboSelect.value == "exp" ? -1 : 1;
     var num = parseInt(txtAmount.value) * n;
-    listData = [...listData, {
+    listData.push({
         id: createUUID(),
         description: txtDescription.value,
         amount: num
-    }];
-    resetForm();
+    });
     render();
-}
-
-function resetForm(){
-    txtAmount.value = 0;
-    txtDescription.value = '';
 }
 
 function calcTotal(list) {
@@ -118,64 +116,31 @@ function showMoney(number) {
         num = number * -1;
         sym = "- ";
     }
-    return sym + formatMoney(num);
+    return sym + formatMoney(number);
 }
 
-function listHtml(element) {
-    const divPercent = element.amount < 0 ? `<div class="item__percentage">${calcPercent(element.amount, totalIncome)}</div>` : '';
-    return `<div class="item clearfix">
-    <div class="item__description">${element.description}</div>
-    <div class="right clearfix">
-      <div class="item__value"> ${showMoney(element.amount)}</div>
-      ${divPercent}
-      <div class="item__delete">
-        <button class="item__delete--btn" onclick="deleteItem('${element.id}')">
-          <i class="ion-ios-close-outline"></i>
-        </button>
-      </div>
-    </div>
-  </div>`;
+function listHtml(value) {
+    return "\u00A0 \u00A0 <li>".concat(value.id, "</li>\u00A0 \u00A0 <li>").concat(value.description, "</li>\u00A0 \u00A0 <li>").concat(showMoney(value.amount), " - ").concat(calcPercent(value.amount, totalExpenses), "</li>\u00A0 \u00A0 ");
 }
 
 function render() {
-    listIncome = listData.filter(function (e) {
-        return e.amount > 0;
-    });
-    listExpenses = listData.filter(function (e) {
-        return e.amount < 0;
-    });
     totalIncome = calcTotal(listIncome);
     totalExpenses = calcTotal(listExpenses);
+    console.log(`totalExpenses = `,totalExpenses);
     percentExpenses = calcPercent(totalExpenses, totalIncome);
-    totalMonth = totalIncome + totalExpenses;
+    totalMonth = totalIncome - totalExpenses;
     elementListIncome.innerHTML = listIncome
         .map(function (e) {
             return listHtml(e);
-        }).join("")
-
+        })
+        .toString();
     elementListExpenses.innerHTML = listExpenses
         .map(function (e) {
             return listHtml(e);
-        }).join("")
+        })
+        .toString();
     elementTotalMonth.innerText = showMoney(totalMonth);
     elementExpenses.innerText = showMoney(totalExpenses);
-    elementIncome.innerText = showMoney(totalIncome);
     elementPercentExpenses.innerText = percentExpenses;
 }
-
-function ready(fn) {
-    if (document.readyState != 'loading') {
-        fn();
-    } else {
-        document.addEventListener('DOMContentLoaded', fn);
-    }
-}
-ready(function () {
-    if (button) {
-        button.addEventListener("click", addItem);
-    }
-    if (cboSelect) {
-        cboSelect.addEventListener("change", changeClass);
-    }
-    render();
-});
+render();
