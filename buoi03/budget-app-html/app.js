@@ -1,4 +1,4 @@
-var listData = [{
+let listData = [{
         id: createUUID(),
         description: "Chi tieu ngay 26/07",
         amount: -100000
@@ -19,26 +19,26 @@ var listData = [{
         amount: -150000
     },
 ];
-var listIncome = [];
-var listExpenses = [];
-var totalIncome = 0;
-var totalExpenses = 0;
-var totalMonth = 0;
-var percentExpenses = "";
-var elementTotalMonth = document.querySelector(".budget__value");
-var elementExpenses = document.querySelector(".budget__expenses--value");
-var elementIncome = document.querySelector(".budget__income--value");
-var elementPercentExpenses = document.querySelector(".budget__expenses--percentage");
-var elementListIncome = document.getElementById("list-incomes");
-var elementListExpenses = document.getElementById("list-expenses");
-var cboSelect = document.querySelector(".add__type");
-var txtDescription = document.querySelector(".add__description");
-var txtAmount = document.querySelector(".add__value");
-var button = document.querySelector(".add__btn");
+let listIncome = [];
+let listExpenses = [];
+let totalIncome = 0;
+let totalExpenses = 0;
+let totalMonth = 0;
+let percentExpenses = "";
+const  elementTotalMonth = document.querySelector(".budget__value");
+const  elementExpenses = document.querySelector(".budget__expenses--value");
+const  elementIncome = document.querySelector(".budget__income--value");
+const  elementPercentExpenses = document.querySelector(".budget__expenses--percentage");
+const  elementListIncome = document.getElementById("list-incomes");
+const  elementListExpenses = document.getElementById("list-expenses");
+const  cboSelect = document.querySelector(".add__type");
+const  txtDescription = document.querySelector(".add__description");
+const  txtAmount = document.querySelector(".add__value");
+const  button = document.querySelector(".add__btn");
 
 function changeClass(e) {
-    var value = e.target.value;
-    var className = ["red-focus", "red"];
+    let value = e.target.value;
+    let className = ["red-focus", "red"];
     if (value == "exp") {
         cboSelect.classList.add(...className);
         txtDescription.classList.add(...className);
@@ -57,16 +57,16 @@ function calcPercent(currentValue, totalValue) {
     if (!totalValue) {
         return 0 + "%";
     }
-    var percent = (currentValue / totalValue) * 100;
+    let percent = (currentValue / totalValue) * 100;
     if (percent < 0)
         percent = percent * -1;
     return Math.round(percent) + "%";
 }
 
 function createUUID() {
-    var dt = new Date().getTime();
-    var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-        var r = (dt + Math.random() * 16) % 16 | 0;
+    let dt = new Date().getTime();
+    let uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+        let r = (dt + Math.random() * 16) % 16 | 0;
         dt = Math.floor(dt / 16);
         return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
     });
@@ -81,8 +81,8 @@ function deleteItem(id) {
 }
 
 function addItem() {
-    var n = cboSelect.value == "exp" ? -1 : 1;
-    var num = parseInt(txtAmount.value) * n;
+    let n = cboSelect.value == "exp" ? -1 : 1;
+    let num = parseInt(txtAmount.value) * n;
     listData = [...listData, {
         id: createUUID(),
         description: txtDescription.value,
@@ -98,7 +98,7 @@ function resetForm(){
 }
 
 function calcTotal(list) {
-    var num = list.reduce(function (total, value) {
+    let num = list.reduce(function (total, value) {
         return total + value.amount;
     }, 0);
     return num;
@@ -112,8 +112,8 @@ function formatMoney(number) {
 }
 
 function showMoney(number) {
-    var num = number;
-    var sym = "+ ";
+    let num = number;
+    let sym = "+ ";
     if (number < 0) {
         num = number * -1;
         sym = "- ";
