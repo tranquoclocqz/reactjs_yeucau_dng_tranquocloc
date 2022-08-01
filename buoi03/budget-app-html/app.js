@@ -54,10 +54,10 @@ function createUUID() {
 }
 
 function deleteItem(id) {
-    localStorage.setItem("items", JSON.stringify(listData.filter(function (e) {
+    listData = listData.filter(function (e) {
         return e.id !== id;
-    })));
-    listData = JSON.parse(localStorage.getItem("items"));
+    });
+    localStorage.setItem("items", JSON.stringify(listData));
     render();
 }
 
