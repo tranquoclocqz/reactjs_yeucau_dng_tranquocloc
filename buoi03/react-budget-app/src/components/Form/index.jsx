@@ -29,13 +29,14 @@ function Form() {
     setAmount(0);
     setDesc("");
   }
+  const addClass = {
+    "red red-focus": type === "exp",
+  }
   return (
     <div className="add">
       <div className="add__container">
         <select
-          className={classname("add__type", {
-            "red red-focus": type === "exp",
-          })}
+          className={classname("add__type", addClass)}
           defaultValue="inc"
           onChange={(e) => handleSetBudgetType(e.target.value)}
         >
@@ -44,24 +45,20 @@ function Form() {
         </select>
         <input
           type="text"
-          className={classname("add__description", {
-            "red red-focus": type === "exp",
-          })}
+          className={classname("add__description", addClass)}
           placeholder="Add description"
           onChange={(e) => handleSetDesc(e.target.value)}
+          value={desc}
         />
         <input
           type="number"
-          className={classname("add__value", {
-            "red red-focus": type === "exp",
-          })}
+          className={classname("add__value", addClass)}
           placeholder="Value"
           onChange={(e) => handleSetAmount(e.target.value)}
+          value={amount}
         />
         <button
-          className={classname("add__btn", {
-            "red red-focus": type === "exp",
-          })}
+          className={classname("add__btn", addClass)}
           onClick={() => handleAddItem()}
         >
           <i className="ion-ios-checkmark-outline"></i>
