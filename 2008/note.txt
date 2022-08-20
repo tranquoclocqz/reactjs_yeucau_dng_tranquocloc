@@ -1,0 +1,107 @@
+Thiết lập cấu trúc dự án
+- Cài đặt và cấu hình Redux với nhiều Reducers
+- Thiết lập cấu trúc các folder cần thiết (store, services)
+
+src
+  store
+    post
+      actions.js
+      reducer.js
+    user
+      actions.js
+      reducer.js
+    category
+      actions.js
+      reducer.js
+  services
+    api.js
+    post.js
+    user.js
+    category.js
+
+
+
+Thiết lập biến môi trường
+  - https://create-react-app.dev/docs/adding-custom-environment-variables
+  - Tạo .env (file riêng ở mỗi máy không đẩy lên git, thêm vào gitignore)
+      + Thêm REACT_APP_BASE_URL=http://wp-api.test/wp-json (http://wp-api.test/wp-json là base_url của api)
+  - Tạo .env.example (file mẫu)
+  - Tạo constants/index.js
+      export const BASE_URL = process.env.REACT_APP_BASE_URL
+
+Thiết lập cấu trúc dự án
+  - Cài đặt các thư viện cần thiết: react-redux, redux, redux-thunk
+  - Tạo src/store, src/services
+  - Tạo src/store/index.js
+  - Tạo src/store/post
+  - Tạo src/store/auth
+  - Tạo src/services/api.js
+  - Tạo src/services/post.js
+  - Tạo src/services/auth.js
+  - Tạo src/store/post/reducer.js -> tạo reducer
+      const intState = {
+      }
+
+      function reducer(postState = intState, action) {
+        return postState;
+      }
+
+      export default reducer;
+  - Tạo src/store/auth/reducer.js -> tạo reducer
+      const intState = {
+        currentUser: null
+      }
+
+      function reducer(authState = intState, action) {
+        return authState;
+      }
+
+      export default reducer;
+  - src/store/index.js -> Tạo rootReducer
+      import authReducer from './auth/reducer';
+      import postReducer from './post/reducer';
+
+      const rootReducer = combineReducers({
+        Post: postReducer,
+        Auth: authReducer
+      });
+  - src/store/index.js -> Tạo store
+      import thunk from 'redux-thunk';
+      import { createStore, applyMiddleware, combineReducers } from 'redux';
+
+      const store = createStore(rootReducer, applyMiddleware(thunk));
+
+      export default store;
+  - src/index.js -> kết nối redux và react
+      import { Provider } from 'react-redux';
+      import store from './store';
+
+      <Provider store={store}>
+        <App />
+      </Provider>
+
+  - Test state -> src/App.js
+      const state = useSelector(state => state);
+      console.log(state);
+  - Cài đặt axios -> npm i axios
+  - src/services/api.js -> setup api
+      import axios from 'axios';
+      import { BASE_URL } from '../constants';
+
+      export const api = {
+        call() {
+          return axios.create({
+            baseURL: BASE_URL
+          });
+        }
+      }
+  - Khai báo postService (src/services/post.js) và authService (src/services/post.js) là các object rỗng
+  - Tạo các file action src/store/auth/action.js, src/store/post/action.js
+  
+
+Chức năng bài viết mới nhất
+  - Khai báo services
+  - Khai báo action
+  - xử lý ở reducer
+
+Ngày post -> Dayjs
