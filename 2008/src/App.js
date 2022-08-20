@@ -1,21 +1,17 @@
-import Header from './components/Header'
-import Footer from './components/Footer'
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
-import HomePage from './pages/HomePage'
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import SearchPage from './pages/SearchPage';
-import PostDetailPage from './pages/PostDetailPage';
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import SearchPage from "./pages/SearchPage";
+import PostDetailPage from "./pages/PostDetailPage";
 
-import {
-  BrowserRouter,
-  Switch,
-  Route
-} from "react-router-dom";
-import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { actFetchAllCategoriesAsync } from './store/category/actions';
-
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { actFetchAllCategoriesAsync } from "./store/category/actions";
+import Auth from "./layouts/Auth";
 function App() {
   const dispatch = useDispatch();
 
@@ -35,10 +31,14 @@ function App() {
             <SearchPage />
           </Route>
           <Route path="/login">
-            <LoginPage />
+            <Auth>
+              <LoginPage />
+            </Auth>
           </Route>
           <Route path="/register">
-            <RegisterPage />
+            <Auth>
+              <RegisterPage />
+            </Auth>
           </Route>
           <Route path="/">
             <HomePage />

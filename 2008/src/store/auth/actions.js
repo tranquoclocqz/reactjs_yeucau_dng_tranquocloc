@@ -1,11 +1,25 @@
-import { authService } from "../../services/auth";
+import {
+  authService
+} from "../../services/auth";
 // Action Type
 export const ACT_LOGIN_SUCCESS = 'ACT_LOGIN_SUCCESS';
 export const ACT_LOGOUT = 'ACT_LOGOUT';
+export const ACT_REGISTER = 'ACT_REGISTER';
 
 
 // Action
-export function actLoginSuccess({ user, token }) {
+
+export function actRegister() {
+  return {
+    type: ACT_REGISTER
+  }
+}
+
+
+export function actLoginSuccess({
+  user,
+  token
+}) {
   return {
     type: ACT_LOGIN_SUCCESS,
     payload: {
@@ -15,7 +29,7 @@ export function actLoginSuccess({ user, token }) {
   }
 }
 
-export function actLogout(){
+export function actLogout() {
   return {
     type: ACT_LOGOUT
   }
@@ -23,12 +37,34 @@ export function actLogout(){
 
 
 // Action Async
+export function actRegisterAync(body) {
+  return async (dispatch) => {
+    try {
+      await authService.register(body);
+      return {
+        ok: true,
+        message: 'success'
+      }
+    } catch (error) {
+      return {
+        ok: false,
+        message: error.message
+      }
+    }
+  };
+}
+
+
+
 export function actFetchMeAsync(token) {
   return async dispatch => {
     try {
       const response = await authService.fetchMe(token);
       const user = response.data;
-      dispatch(actLoginSuccess({ user, token }))
+      dispatch(actLoginSuccess({
+        user,
+        token
+      }))
       return {
         ok: true
       }

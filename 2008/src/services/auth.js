@@ -1,4 +1,6 @@
-import { api } from './api';
+import {
+  api
+} from './api';
 
 export const authService = {
   login(username, password) {
@@ -13,5 +15,8 @@ export const authService = {
         "Authorization": `Bearer ${token}`
       }
     });
+  },
+  register(body) {
+    return api.call().post('wp/v2/users/register', body);
   }
 }
