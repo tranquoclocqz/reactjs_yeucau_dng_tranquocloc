@@ -1,6 +1,37 @@
-
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import localeVi from 'dayjs/locale/vi';
+import { DATE_TEMPLATE } from '../constants';
 export function getQueryStr(name) {
   return new URLSearchParams(window.location.search).get(name)
+}
+export function formatDate(date){
+  dayjs.extend(relativeTime);
+  dayjs.locale(localeVi);
+  return dayjs(date).format(DATE_TEMPLATE)  
+}
+export function mappingMenuData(menus) {
+  const child = menus.child_items || [];
+  return {
+    id: menus.ID,
+    title: menus.title,
+    url: menus.url,
+    childItems: child.map(mappingMenuData)
+  }
+}
+
+export function mappingPostDataDetail(data){
+  return {
+    content: data.content.rendered,
+    excerpt: data.excerpt.rendered,
+    title: data.title.rendered,
+    authorName: data.author_data.nickname,
+    authorAvatar: data.author_data.avatar,
+    datePublish: data.date,
+    viewCount: data.view_count,
+    commentCount: data.comment_count,
+    thumbnail: data.featured_media_url
+  }
 }
 
 export function mappingPostData(post) {
@@ -21,7 +52,7 @@ export function handleHashCategoryById(categories) {
   const hashObj = {}
 
   categories.forEach(categoryItem => {
-    const key = categoryItem.id
+    const key = categories.id
 
     hashObj[key] = {
       id: categoryItem.id,
@@ -34,7 +65,10 @@ export function handleHashCategoryById(categories) {
   return hashObj
 }
 
-export function validateFormData({ value, name }) {
+export function validateFormData({
+  value,
+  name
+}) {
   let error = '';
 
   if (name === 'username' && !value) {

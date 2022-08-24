@@ -11,12 +11,13 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { actFetchAllCategoriesAsync } from "./store/category/actions";
+import { actFetchMenuAync } from "./store/menu/actions";
 import Auth from "./layouts/Auth";
 function App() {
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(actFetchAllCategoriesAsync());
+    dispatch(actFetchMenuAync());
   }, [dispatch]);
 
   return (
