@@ -8,7 +8,8 @@ const categoryService = {
     return api.call().get('/wp/v2/categories', {
       params: {
         page,
-        per_page
+        per_page,
+        lang: `vi`
       }
     });
   }

@@ -1,4 +1,4 @@
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { useSelector } from "react-redux"
 
@@ -16,7 +16,7 @@ export default function ArticleItemCategories({ categoriesId }) {
 
           const categorySlugLink = '/category/' + category.slug;
 
-          return <li key={cateId}><a href={categorySlugLink} className="btn btn-category">{category.name}</a></li>
+          return <li key={cateId}><Link to={categorySlugLink} className="btn btn-category">{category.name}</Link></li>
         })
       }
     </ul>

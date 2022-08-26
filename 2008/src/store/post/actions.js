@@ -141,6 +141,38 @@ export function actFetchArticleGeneralAsync({
   }
 }
 
+
+
+export function actFetchArticleByCategoryAsync({
+  categories,
+  perPage = 2,
+  currentPage = 1,  
+} = {}) {
+  return async (dispatch) => {
+    try {
+      const response = await postService.getArticleByCategory({
+        perPage,
+        currentPage,
+        categories
+      });
+      const total = Number(response.headers['x-wp-total']);
+      const totalPages = Number(response.headers['x-wp-totalpages']);
+      const posts = response.data.map(mappingPostData);
+
+      dispatch(actFetchArticleGeneral({
+        posts,
+        total,
+        totalPages,
+        currentPage
+      }))
+    } catch (err) {
+      // TODO 
+    }
+  }
+}
+
+
+
 export function actFetchListAsync(params) {
   return async (dispatch) => {
     try {

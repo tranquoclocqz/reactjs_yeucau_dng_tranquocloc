@@ -13,7 +13,6 @@ function SearchPage() {
   const queryStr = getQueryStr(location);
   const dispatch = useDispatch();
 
-  console.log(`queryStr = `, queryStr);
   useEffect(() => {
     const payload = {
       search: queryStr,

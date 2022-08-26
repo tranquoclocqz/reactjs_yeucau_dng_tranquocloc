@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import SearchPage from "./pages/SearchPage";
 import PostDetailPage from "./pages/PostDetailPage";
+import CategoryPage from "./pages/CategoryPage";
 
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -25,6 +26,9 @@ function App() {
       <div className="wrapper-content">
         <Header />
         <Switch>
+          <Route path="/category/:slug">
+            <CategoryPage />
+          </Route>
           <Route path="/post/:slug">
             <PostDetailPage />
           </Route>

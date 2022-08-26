@@ -1,14 +1,16 @@
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import localeVi from 'dayjs/locale/vi';
-import { DATE_TEMPLATE } from '../constants';
+import {
+  DATE_TEMPLATE
+} from '../constants';
 export function getQueryStr(name) {
   return new URLSearchParams(window.location.search).get(name)
 }
-export function formatDate(date){
+export function formatDate(date) {
   dayjs.extend(relativeTime);
   dayjs.locale(localeVi);
-  return dayjs(date).format(DATE_TEMPLATE)  
+  return dayjs(date).format(DATE_TEMPLATE)
 }
 export function mappingMenuData(menus) {
   const child = menus.child_items || [];
@@ -20,7 +22,7 @@ export function mappingMenuData(menus) {
   }
 }
 
-export function mappingPostDataDetail(data){
+export function mappingPostDataDetail(data) {
   return {
     content: data.content.rendered,
     excerpt: data.excerpt.rendered,
@@ -49,10 +51,9 @@ export function mappingPostData(post) {
 }
 
 export function handleHashCategoryById(categories) {
-  const hashObj = {}
-
+  let hashObj = {}
   categories.forEach(categoryItem => {
-    const key = categories.id
+    const key = categoryItem.id
 
     hashObj[key] = {
       id: categoryItem.id,
@@ -63,6 +64,22 @@ export function handleHashCategoryById(categories) {
   })
 
   return hashObj
+}
+
+export function handleGetCategoryBySlug(slug, categories) {
+  if (categories) {
+    for (const key in categories) {
+      if (Object.hasOwnProperty.call(categories, key)) {
+        const element = categories[key];
+        if (element['slug'] === slug) {
+          return {
+            key,
+            element
+          };
+        }
+      }
+    }
+  }
 }
 
 export function validateFormData({
